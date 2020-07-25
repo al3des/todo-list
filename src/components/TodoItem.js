@@ -1,30 +1,25 @@
-import React from "react";
-import { Button } from "react-bootstrap";
-import { BsFillTrashFill } from "react-icons/bs";
-import { FaUndo } from "react-icons/fa";
-import { MdDone } from "react-icons/md";
+import React, { useContext } from "react"
+import TodosContext from "../TodosContext"
 
-export default function TodoItem({ todo, todos, setTodos }) {
-  let style = {
-    textDecoration: todo.isComplete ? "line-through" : "",
-  };
+import { Button } from "react-bootstrap"
+import { BsFillTrashFill } from "react-icons/bs"
+import { FaUndo } from "react-icons/fa"
+import { MdDone } from "react-icons/md"
+
+export default function TodoItem({ todo }) {
+  let { setTodos } = useContext(TodosContext)
 
   function handleTodoComplete(id) {
-    let updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        return { ...todo, isComplete: !todo.isComplete };
-      }
-      return todo;
-    });
-    setTodos(updatedTodos);
+    setTodos({ type: "COMPLETE", id })
   }
 
   function handleTodoDelete(id) {
-    let updatedTodos = todos.filter((todo) => todo.id !== id);
-    setTodos(updatedTodos);
+    setTodos({ type: "DELETE", id })
   }
-  let completedTask = todo.isComplete ? "bg-success text-white" : "";
-
+  let style = {
+    textDecoration: todo.isCompleted ? "line-through" : "",
+  }
+  let completedTask = todo.isCompleted ? "bg-success text-white" : ""
   return (
     <div
       className={`d-flex align-items-center justify-content-between mb-2 p-2 ${completedTask}`}
@@ -45,9 +40,9 @@ export default function TodoItem({ todo, todos, setTodos }) {
           className="ml-2"
           onClick={() => handleTodoComplete(todo.id)}
         >
-          {!todo.isComplete ? <MdDone /> : <FaUndo />}
+          {!todo.isCompleted ? <MdDone /> : <FaUndo />}
         </Button>
       </div>
     </div>
-  );
+  )
 }

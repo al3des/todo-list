@@ -1,18 +1,25 @@
-import React, { useState } from "react";
-import { Container } from "react-bootstrap";
-import Todos from "./components/Todos";
-import TodoForm from "./components/TodoForm";
+import React, { useState } from "react"
+import useReducerTodos from "./hooks/useReducerTodos"
+import TodosContext from "./TodosContext"
+
+import { Container } from "react-bootstrap"
+import Todos from "./components/Todos"
+import TodoForm from "./components/TodoForm"
+import TodosFilter from "./components/TodosFilter"
 
 function App() {
-  let [todos, setTodos] = useState([]);
-
+  let [todos, setTodos] = useReducerTodos()
+  let [filter, setFilter] = useState("ALL")
   return (
-    <Container className="App">
-      <h1>Todo List</h1>
-      <TodoForm todos={todos} setTodos={setTodos} />
-      <Todos todos={todos} setTodos={setTodos} />
-    </Container>
-  );
+    <TodosContext.Provider value={{ todos, setTodos, filter, setFilter }}>
+      <Container className="App">
+        <h1>Todo List</h1>
+        <TodoForm todos={todos} setTodos={setTodos} />
+        <TodosFilter />
+        <Todos />
+      </Container>
+    </TodosContext.Provider>
+  )
 }
 
-export default App;
+export default App

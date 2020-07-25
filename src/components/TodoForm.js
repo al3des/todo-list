@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { InputGroup, FormControl, Button } from "react-bootstrap";
-import { v4 as uuid } from "uuid";
+import React, { useState, useContext } from "react"
+import TodosContext from "../TodosContext"
 
-export default function TodoForm({ todos, setTodos }) {
-  let [task, setTask] = useState("");
+import { InputGroup, FormControl, Button } from "react-bootstrap"
+
+export default function TodoForm() {
+  let [task, setTask] = useState("")
+  let { setTodos } = useContext(TodosContext)
 
   function handleSetTask(e) {
     if (task) {
-      setTodos(todos.concat({ id: uuid(), task, isComplete: false }));
+      setTodos({ type: "ADD", task })
     }
-    setTask("");
+    setTask("")
   }
 
   return (
@@ -22,7 +24,7 @@ export default function TodoForm({ todos, setTodos }) {
         onChange={(e) => setTask(e.target.value)}
         onKeyPress={(e) => {
           if (e.key === "Enter") {
-            handleSetTask(task);
+            handleSetTask(task)
           }
         }}
       />
@@ -35,5 +37,5 @@ export default function TodoForm({ todos, setTodos }) {
         </Button>
       </InputGroup.Append>
     </InputGroup>
-  );
+  )
 }
