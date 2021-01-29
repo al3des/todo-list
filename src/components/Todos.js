@@ -1,17 +1,17 @@
-import React, { useContext } from "react"
-import useTodosFilter from "../hooks/useTodosFilter"
+import React from "react";
+import useTodosFilter from "../hooks/useTodosFilter";
 
-import TodoItem from "./TodoItem"
+import TodoItem from "./TodoItem";
 
 export default function Todos() {
-  let displayTodos = useTodosFilter()
+  let displayTodos = useTodosFilter();
   return (
     <div>
       <div>
         {displayTodos.map((todo) => {
-          return <TodoItem key={todo.id} todo={todo} />
+          return <TodoItem key={todo.id} todo={todo} />;
         })}
       </div>
     </div>
-  )
+  );
 }
